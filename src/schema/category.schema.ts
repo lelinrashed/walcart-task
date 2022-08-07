@@ -15,6 +15,7 @@ export class Category {
   isActive: boolean;
 
   @Field(() => ID, { nullable: true })
+  @prop({ required: false, unique: false })
   parentId?: string;
 }
 
@@ -28,6 +29,6 @@ export class CreateCategoryInput {
   @Field(() => Boolean, { defaultValue: false })
   isActive?: boolean;
 
-  @Field(() => ID, { nullable: true })
+  @Field(() => String, { nullable: true })
   parentId?: string;
 }
