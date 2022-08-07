@@ -29,6 +29,6 @@ export class CreateCategoryInput {
   @Field(() => Boolean, { defaultValue: false })
   isActive?: boolean;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String, { nullable: true, defaultValue: null })
   parentId?: string;
 }
