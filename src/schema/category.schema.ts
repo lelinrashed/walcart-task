@@ -32,3 +32,12 @@ export class CreateCategoryInput {
   @Field(() => String, { nullable: true, defaultValue: null })
   parentId?: string;
 }
+
+@InputType()
+export class UpdateCategoryInput {
+  @Field(() => String)
+  _id: string;
+
+  @Field(() => String, { nullable: false })
+  name: string;
+}

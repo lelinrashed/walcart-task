@@ -1,5 +1,5 @@
-import { Arg, Mutation, Resolver } from "type-graphql";
-import { Category, CreateCategoryInput } from "../schema/category.schema";
+import { Arg, Mutation, Query, Resolver } from "type-graphql";
+import { Category, CreateCategoryInput, UpdateCategoryInput } from "../schema/category.schema";
 import CategoryService from "../service/category.service";
 
 @Resolver()
@@ -8,8 +8,18 @@ export default class CategoryResolver {
     this.categoryService = new CategoryService();
   }
 
+  @Query(() => [String])
+  findCategory(@Arg("name") name: string) {
+    return this.categoryService.findCategory(name);
+  }
+
   @Mutation(() => Category)
   createCategory(@Arg("input") input: CreateCategoryInput) {
     return this.categoryService.createCategory(input);
+  }
+
+  @Mutation(() => Category)
+  updateCategory(@Arg("input") input: UpdateCategoryInput) {
+    return this.categoryService.updateCategory(input);
   }
 }
