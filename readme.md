@@ -36,4 +36,4 @@ After start development server GraphQL playground will be available in 4000 port
 
 - I'll use MongoDB Atlas could for host my database.
 - For server i'll use Droplets from DigitalOcean.
-- Automatic deploy use CI/CD pipeline with GitHub actions.
+- For deploy with CI/CD pipeline I'll use GitHub actions.
