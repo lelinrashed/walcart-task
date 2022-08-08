@@ -17,6 +17,10 @@ export class Category {
   @Field(() => ID, { nullable: true })
   @prop({ required: false, unique: false })
   parentId?: string;
+
+  @Field(() => ID, { nullable: true })
+  @prop({ required: false, unique: false })
+  childId?: string;
 }
 
 export const CategoryModel = getModelForClass(Category);
@@ -31,6 +35,9 @@ export class CreateCategoryInput {
 
   @Field(() => String, { nullable: true, defaultValue: null })
   parentId?: string;
+
+  @Field(() => String, { nullable: true, defaultValue: null })
+  childId?: string;
 }
 
 @InputType()

@@ -22,4 +22,14 @@ export default class CategoryResolver {
   updateCategory(@Arg("input") input: UpdateCategoryInput) {
     return this.categoryService.updateCategory(input);
   }
+
+  @Mutation(() => Boolean)
+  deleteCategory(@Arg("input") id: string) {
+    return this.categoryService.deleteCategory(id);
+  }
+
+  @Mutation(() => Boolean)
+  deactivateCategory(@Arg("input") id: string) {
+    return this.categoryService.deactivateCategory(id);
+  }
 }

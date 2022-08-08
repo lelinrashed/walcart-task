@@ -1,12 +1,22 @@
 import {
   CategoryModel,
   CreateCategoryInput,
-  UpdateCategoryInput,
+  UpdateCategoryInput
 } from "../schema/category.schema";
 
 class CategoryService {
   async createCategory(input: CreateCategoryInput) {
-    return CategoryModel.create(input);
+    const category = await CategoryModel.create(input);
+    if (category.parentId != null) {
+      await CategoryModel.findByIdAndUpdate(
+        category.parentId,
+        {
+          $set: { childId: category._id },
+        },
+        { new: true }
+      );
+    }
+    return category;
   }
 
   async findCategory(name: string) {
@@ -34,6 +44,44 @@ class CategoryService {
       },
       { new: true }
     );
+  }
+
+  async deleteCategory(id: string) {
+    let category = await CategoryModel.findByIdAndDelete(id);
+    if (category?.childId != null) {
+      while (true) {
+        category = await CategoryModel.findByIdAndDelete(category.childId);
+        if (category?.childId == null) {
+          break;
+        }
+      }
+    }
+    return true;
+  }
+
+  async deactivateCategory(id: string) {
+    let category = await CategoryModel.findByIdAndUpdate(
+      id,
+      {
+        $set: { isActive: false },
+      },
+      { new: true }
+    );
+    if (category?.childId != null) {
+      while (true) {
+        category = await CategoryModel.findByIdAndUpdate(
+          category?.childId,
+          {
+            $set: { isActive: false },
+          },
+          { new: true }
+        );
+        if (category?.childId == null) {
+          break;
+        }
+      }
+    }
+    return true;
   }
 }
 
